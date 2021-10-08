@@ -43,6 +43,7 @@ ui <- fluidPage(
       br(),
       
       textInput("address", tags$b("Type Your Address"), value = "1015 W Main St, Richmond, VA 23220"),
+      radioButtons("site_type", tags$b("Site Types to Show?"), c("All", "Schools Only", "Non-Schools Only")),
       
       br(),
       
@@ -56,7 +57,7 @@ ui <- fluidPage(
                  tags$a(href="https://state.nokidhungry.org/virginia/afterschool-meals/", "No Kid Hungry"),
                  " website or the ",
                  tags$a(href="https://www.vdh.virginia.gov/child-and-adult-care-food-program/", "Virginia Department of Health"),
-                 "website",
+                 " website.",
                  sep = ""
       )
       )
@@ -78,16 +79,25 @@ server <- function(input, output, session) {
     lat_long_fun(input$address)
   })
   
+  filt_val <- reactive({
+    if (input$site_type == "All") 0:10000 else if (input$site_type == "Schools Only") 0:250 else 300:10000
+  })
+  
+  filt_df <- reactive({
+    meals_comp %>%
+      filter(sfa_id %in% filt_val())
+  })
+  
   closest_ind <- reactive({
-    get_closest_ind(adr_df(), y = meals_comp)
+    get_closest_ind(adr_df(), y = filt_df())
   })
   
   closest_txt <- reactive({
-    make_closest_text(closest_ind(), df = meals_comp)
+    make_closest_text(closest_ind(), df = filt_df())
   })
   
   map_df <- reactive({
-    create_map_df(adr_df(), meals_comp, name = input$address, ind = closest_ind())
+    create_map_df(adr_df(), filt_df(), name = input$address, ind = closest_ind())
   })
   
   output$map <- renderLeaflet({

@@ -1,0 +1,13 @@
+name: datathon_2021_vcusoe
+title: datathon_2021_vcusoe
+username:
+account: ekholme
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4823833
+bundleId: 5118906
+url: https://ekholme.shinyapps.io/datathon_2021_vcusoe/
+when: 1633705772.65867
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: LICENSE|README.md|R/lat_long_fun.R

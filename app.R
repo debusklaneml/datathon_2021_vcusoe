@@ -10,6 +10,7 @@ library(sf)
 library(tidygeocoder)
 library(nngeo)
 library(jsonlite)
+library(bslib)
 
 load("data/meals_comp.RData")
 
@@ -19,17 +20,54 @@ source("R/functions.R")
 # UI ----------------------------------------------------------------------
 
 ui <- fluidPage(
-  titlePanel("After School Meals"),
+  
+  theme = bs_theme(bootswatch = "minty"),
+  
+  titlePanel("Afterschool Meals Provider Locator"),
   sidebarLayout(
     sidebarPanel(
-      textInput("address", "Address", value = "1015 W Main St, Richmond, VA 23220")
+      
+      h2("Instructions"),
+      
+      HTML(paste("This app provides a tool for users to look up nearby sites participating in the CACFP afterschool meals 
+      program. Simply type your address into the box below, and the map will display your address (as a ", 
+                 tags$span(style="color:red", "red marker"),
+                 "), the closest site (as a ",
+                 tags$span(style="color:#378805", "green marker"),
+                 "), and additional nearby sites (as ",
+                 tags$span(style="color:navy", "blue markers"),
+                 ").", sep = "")
+      ),
+      
+      br(),
+      br(),
+      
+      textInput("address", tags$b("Type Your Address"), value = "1015 W Main St, Richmond, VA 23220"),
+      
+      br(),
+      
+      h2("Your Closest Site"),
+      
+      textOutput("closest"),
+      
+      h2("Learn More"),
+      
+      HTML(paste("To learn more about the CACFP afterschool meals program, you can visit the ", 
+                 tags$a(href="https://state.nokidhungry.org/virginia/afterschool-meals/", "No Kid Hungry"),
+                 " website or the ",
+                 tags$a(href="https://www.vdh.virginia.gov/child-and-adult-care-food-program/", "Virginia Department of Health"),
+                 "website",
+                 sep = ""
+      )
+      )
     ),
+    
     mainPanel(
-      leafletOutput("map", height = 800),
-      textOutput("closest")
+      leafletOutput("map", height = 800)
     )
   )
 )
+
 
 
 # Server ------------------------------------------------------------------

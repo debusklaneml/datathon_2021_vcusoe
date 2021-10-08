@@ -2,6 +2,12 @@
 
 ## Team: VCUSOE
 
+-   Eric Ekholm, Ph.D.
+
+-   Morgan DeBusk-Lane, Ph.D.
+
+-   Michael Broda, Ph.D.
+
 ## Problem:
 
 -   "On average, only 4% of children eligible for free or reduced-price lunch participate in the CACFP At-risk Afterschool Meals program each school day." - [No Kid Hungry Virginia](https://state.nokidhungry.org/virginia/)
